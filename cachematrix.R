@@ -1,15 +1,52 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Programs function will cache the inverse of matrix
+##
+## The example function:
+##
+## > source('cachematrix.R')
+## > z <- makeCacheMatrix(matrix(c(4, 0, 0, 4), c(2, 2)))
+## > cacheSolve(z)
+## [,1] [,2]
+## [1,]  0.25  0.0
+## [2,]  0.0  0.25
 
-## Write a short comment describing this function
+## Create function matrix that contain =
+##   - set the value of the matrix (set)
+##   - get the value of the matrix (get)
+##   - get the value of the inverse matrix (getinverse)
+##   - set the value of the inverse matrix (setinverse)
+##   
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  set <- function(y) {
+    x <<- y
+    i <<- NULL
+  }
+  get <- function() x
+  setinverse <- function(inv) i <<- inv
+  getinverse <- function() i
+  list(
+    set = set,
+    get = get,
+    setinverse = setinverse,
+    getinverse = getinverse
+  )
 }
 
 
-## Write a short comment describing this function
+## Calculate the inverse of the special "matrix" created with the above
+## function, reusing cached result if it is available
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getinverse()
+  if(!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  z <- x$get()
+  i <- solve(z, ...)
+  x$setinverse(i)
+  i
 }
+
+
