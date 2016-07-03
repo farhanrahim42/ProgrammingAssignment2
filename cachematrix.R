@@ -34,8 +34,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Calculate the inverse of the special "matrix" created with the above
-## function, reusing cached result if it is available
+## Will create the inverse matrix
+## If recalled cacheSolve,the value reuse from cached data if available
 
 cacheSolve <- function(x, ...) {
   i <- x$getinverse()
